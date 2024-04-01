@@ -1,0 +1,21 @@
+<div
+  class="text-danger d-flex flex-column mt-3"
+  *ngIf="ref && !ref?.valid && (ref?.dirty || ref?.touched)"
+>
+  <small>Invalid {{ fieldName }}</small>
+
+  <small *ngIf="ref.errors?.['required']"> {{ fieldName }} dibutuhkan </small>
+
+  <small *ngIf="ref.errors?.['minlength'] || ref.errors?.['maxlength']">
+    {{ fieldName }} harus tepat
+    {{ ref.errors?.['minlength'].requiredLength }} karakter
+  </small>
+
+  <small *ngIf="ref.errors?.['max']">
+    {{ fieldName }} maksimal harus {{ ref.errors?.['max'].max }}
+  </small>
+
+  <small *ngIf="ref.errors?.['min']">
+    {{ fieldName }} minimal harus {{ ref.errors?.['min'].min }}
+  </small>
+</div>

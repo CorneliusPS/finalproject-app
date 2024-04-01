@@ -1,0 +1,82 @@
+<div class="container mt-3">
+  <div class="row mb-3">
+    <div class="col-md-12 d-flex justify-content-between mb-3">
+      <h4>Daftar Barang</h4>
+      <div class="d-flex justify-content-end gap-3 w-75">
+        <input
+          type="text"
+          class="form-control-sm flex-fill"
+          name="search"
+          [(ngModel)]="search"
+          (keyup)="onList()"
+          placeholder="Search..."
+        />
+        <select
+          (change)="onList()"
+          class="form-control-sm"
+          name="limit"
+          [(ngModel)]="limit"
+        >
+          <option value="1">1 Items</option>
+          <option value="5">5 Items</option>
+          <option value="10">10 Items</option>
+          <option value="20">20 Items</option>
+        </select>
+        <app-widget-barang-create (onSuccess)="onSuccessCreate($event)" />
+        <button class="btn btn-dark" (click)="onList()">Refresh</button>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <table class="table table-bordered table-hover table-stripped">
+        <thead>
+          <tr>
+            <th>Kode Barang</th>
+            <th>Nama Barang</th>
+            <th>Harga Barang</th>
+            <th>Stok Barang</th>
+            <th>Status Barang</th>
+            <th>Deskripsi</th>
+            <th>Kategori</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let barang of daftarBarang.data">
+            <td>{{ barang.kodeBarang }}</td>
+            <td>{{ barang.namaBarang }}</td>
+            <td>
+              {{ barang.hargaBarang | currency : "IDR" : "symbol-narrow" }}
+            </td>
+            <td>{{ barang.stokBarang }}</td>
+            <td>{{ barang.statusBarang }}</td>
+            <td>{{ barang.deskripsiBarang }}</td>
+            <td>{{ barang.kategoriBarang.namaKategori }}</td>
+            <td class="d-flex gap-2">
+              <app-widget-barang-detail
+                [id]="barang?.idBarang || 0"
+                (onSuccess)="onSuccessUpdate($event)"
+              ></app-widget-barang-detail>
+              <button
+                (click)="onDelete(barang?.idBarang || 0)"
+                class="btn btn-warning"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td [colSpan]="8">
+              <!-- <app-paging
+                [next]="daftarBarang.next"
+                [previous]="daftarBarang.previous"
+                (onPaginate)="onPaginate($event)"
+              ></app-paging> -->
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>

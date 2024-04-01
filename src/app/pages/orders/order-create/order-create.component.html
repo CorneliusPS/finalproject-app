@@ -1,0 +1,210 @@
+<div class="container mt-3">
+  <!-- FORM DETAIL ORDER -->
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <div class="card" [formGroup]="orderForm">
+        <div class="card-body">
+          <div class="card-title">
+            <h4>Order Detail</h4>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label>Nomor Order</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="nomor"
+                  />
+                </div>
+              </div>
+              <div class="col">
+                <!-- TODO: add datepicker and limit years -->
+                <div class="form-group">
+                  <label>Tanggal Transaksi</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    formControlName="tanggal"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM DETAIL CUSTOMER -->
+  <div class="row mb-3" [formGroup]="orderForm">
+    <div class="col-md-12">
+      <div class="card" formGroupName="customer">
+        <div class="card-body">
+          <div class="card-title">
+            <h4>Detail Customer</h4>
+          </div>
+          <div class="row mb-3">
+            <div class="col">
+              <div class="form-group">
+                <label>Nomor Customer</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="nomorCustomer"
+                  (keyup.enter)="onFindCustomer()"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+                <!-- <input type="text" class="form-control" formControlName="nomor"> -->
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label>Nama Customer</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="nama"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label>Nomor Telepon</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="telepon"
+                />
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label>Alamat</label>
+                <textarea
+                  class="form-control"
+                  formControlName="alamat"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM LIST ITEM -->
+  <div class="row mb-3" [formGroup]="orderForm">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title">
+            <h4>Daftar Item</h4>
+          </div>
+        </div>
+        <table class="table table-hover table-stripped">
+          <thead>
+            <tr>
+              <th>Nomor</th>
+              <th>Nama</th>
+              <th>Satuan</th>
+              <th>Harga Jual</th>
+              <th>Stok</th>
+              <th>Qty</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody formArrayName="items">
+            <tr
+              *ngFor="
+                let item of getItemsForm().controls;
+                let indexItem = index
+              "
+              [formGroupName]="indexItem"
+            >
+              <td>
+                {{ getItemForm(indexItem).nomor }}
+              </td>
+              <td>
+                {{ getItemForm(indexItem).nama }}
+              </td>
+              <td>
+                {{ getItemForm(indexItem).satuan }}
+              </td>
+              <td>
+                {{
+                  getItemForm(indexItem).hargaJual
+                    | currency : "IDR" : "symbol-narrow"
+                }}
+              </td>
+              <td>
+                {{ getItemForm(indexItem).stok }}
+              </td>
+              <td>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="qty"
+                  (ngModelChange)="onQtyChange(indexItem)"
+                />
+              </td>
+              <td>
+                {{
+                  getItemForm(indexItem).subtotal
+                    | currency : "IDR" : "symbol-narrow"
+                }}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="kodeBarang"
+                  (keyup.enter)="onFindBarang()"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="6">Total</td>
+              <td>
+                {{
+                  orderForm.get("total")?.value
+                    | currency : "IDR" : "symbol-narrow"
+                }}
+              </td>
+            </tr>
+            <tr>
+              <td colspan="6">Dibayar</td>
+              <td>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="dibayar"
+                />
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <!-- <button class="btn btn-primary" (click)="addItemForm()">Add Item/Barang</button> -->
+      <button class="btn btn-warning" (click)="onCreate()">Simpan</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,116 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      Tambah Barang {{ barangz.namaBarang }}
+    </h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <!-- Form tambah barang -->
+    <form>
+      <div class="mb-3">
+        <label for="kodeBarang" class="form-label">Kode Barang</label>
+        <input
+          type="text"
+          class="form-control"
+          id="kodeBarang"
+          name="kodeBarang"
+          placeholder="Kode Barang"
+          [(ngModel)]="barangz.kodeBarang"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="namaBarang" class="form-label">Nama Barang</label>
+        <input
+          type="text"
+          class="form-control"
+          id="namaBarang"
+          name="namaBarang"
+          placeholder="Nama Barang"
+          [(ngModel)]="barangz.namaBarang"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="hargaBarang" class="form-label">Harga Barang</label>
+        <input
+          type="number"
+          class="form-control"
+          id="hargaBarang"
+          name="hargaBarang"
+          placeholder="Harga Barang"
+          [(ngModel)]="barangz.hargaBarang"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="stokBarang" class="form-label">Stok Barang</label>
+        <input
+          type="number"
+          class="form-control"
+          id="stokBarang"
+          name="stokBarang"
+          placeholder="Stok Barang"
+          [(ngModel)]="barangz.stokBarang"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="statusBarang" class="form-label">Status Barang</label>
+        <select
+          class="form-select"
+          id="statusBarang"
+          name="statusBarang"
+          [(ngModel)]="barangz.statusBarang"
+        >
+          <option value="AVAILABLE">AVAILABLE</option>
+          <option value="UNAVAILABLE">UNAVAILABLE</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="deskripsiBarang" class="form-label">Deskripsi Barang</label>
+        <textarea
+          class="form-control"
+          id="deskripsiBarang"
+          name="deskripsiBarang"
+          placeholder="Deskripsi Barang"
+          [(ngModel)]="barangz.deskripsiBarang"
+        ></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="kategoriBarang" class="form-label">Kategori Barang</label>
+        <select
+          class="form-select"
+          id="kategoriBarang"
+          name="kategoriBarang"
+          [(ngModel)]="barangz.kategoriBarang"
+        >
+          <option
+            *ngFor="let kategori of kategoriBarangs.data"
+            [ngValue]="kategori"
+          >
+            {{ kategori.namaKategori }}
+          </option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-dark"
+      (click)="modal.close('Save click'); onCreate()"
+    >
+      Save
+    </button>
+  </div>
+</ng-template>
+<button class="btn btn-dark" (click)="open(content)">Tambah</button>

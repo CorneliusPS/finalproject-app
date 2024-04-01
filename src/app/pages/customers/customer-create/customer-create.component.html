@@ -1,0 +1,54 @@
+<div class="container mt-5">
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Tambah Customer</h4>
+
+          <div class="form-group mb-3">
+            <label class="mb-2"> Nomor Customer </label>
+            <input
+              type="text"
+              class="form-control"
+              name="nomor"
+              [(ngModel)]="customer.nomor"
+            />
+          </div>
+
+          <div class="form-group mb-3">
+            <label class="mb-2"> Nama Customer </label>
+            <input
+              type="text"
+              class="form-control"
+              name="nama"
+              [(ngModel)]="customer.nama"
+            />
+          </div>
+          <div class="form-group mb-3">
+            <label class="mb-2"> Alamat </label>
+            <input
+              type="text"
+              class="form-control"
+              name="alamat"
+              [(ngModel)]="customer.alamat"
+            />
+          </div>
+
+          <div class="form-group mb-3">
+            <label class="mb-2"> Telepon </label>
+            <input
+              type="text"
+              class="form-control"
+              name="telepon"
+              [(ngModel)]="customer.telepon"
+            />
+          </div>
+        </div>
+        <div class="card-footer d-flex gap-1">
+          <button (click)="onCreate()" class="btn btn-dark">Save</button>
+          <a [routerLink]="['..']" class="btn btn-warning mx-2">Cancel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

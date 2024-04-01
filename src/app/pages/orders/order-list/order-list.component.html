@@ -1,0 +1,73 @@
+<div class="container mt-3">
+  <div class="row mb-3">
+    <div class="col-md-12 d-flex justify-content-between mb-3">
+      <h4>Daftar Order</h4>
+      <div class="d-flex justify-content-end gap-3 w-75">
+        <input
+          type="text"
+          class="form-control-sm flex-fill"
+          name="search"
+          [(ngModel)]="search"
+          (keyup)="onList()"
+          placeholder="Search..."
+        />
+        <select
+          (change)="onList()"
+          class="form-control-sm"
+          name="limit"
+          [(ngModel)]="limit"
+        >
+          <option value="2">2 Items</option>
+          <option value="5">5 Items</option>
+          <option value="10">10 Items</option>
+          <option value="20">20 Items</option>
+        </select>
+        <a [routerLink]="['new']" class="btn btn-dark">Tambah</a>
+        <button class="btn btn-dark" (click)="onList()">Refresh</button>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <table class="table table-bordered table-hover table-stripped">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Tanggal</th>
+            <th>Customer</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders.results">
+            <td>{{ order.nomor }}</td>
+            <td>{{ order.tanggal | date }}</td>
+            <td>{{ order.customer.nama }}</td>
+            <td>{{ order.total | currency : "IDR" : "symbol-narrow" }}</td>
+            <!-- <td class="d-flex gap-2"> -->
+            <!-- <app-widget-customer-detail
+                [id]="order._id || ''"
+                (onSuccess)="onSuccessUpdate($event)"
+              ></app-widget-customer-detail> -->
+            <!-- <button
+                (click)="onDelete(ord._id || '')"
+                class="btn btn-warning"
+              >
+                Delete
+              </button> -->
+            <!-- </td> -->
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td [colSpan]="4">
+              <app-paging
+                [next]="orders.next"
+                [previous]="orders.previous"
+                (onPaginate)="onPaginate($event)"
+              ></app-paging>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
